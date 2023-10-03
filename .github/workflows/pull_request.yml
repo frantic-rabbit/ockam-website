@@ -1,0 +1,22 @@
+name: Lint EditorConfig
+on:
+  pull_request:
+    paths:
+      - '**/*' # Trigger on any file change in the repository
+
+jobs:
+  lint_editorconfig:
+    name: All - lint_editorconfig
+    runs-on: ubuntu-20.04
+
+    container:
+      image: greut/eclint:v0.3.3@sha256:95e9a3dcbd236bae6569625cd403175cbde3705303774e7baca418b6442b8d77
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.commit_sha }}
+
+      - name: Lint files
+        run: eclint -color=always
